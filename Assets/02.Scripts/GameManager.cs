@@ -6,13 +6,13 @@ public class GameManager : MonoBehaviour
 {
 
     private GameObject DangerEffect;
-    private Color Effectcolor;
+    private Color Effectcolor; // ìƒ‰ìƒ íˆ¬ëª…ë„
 
     public Text Timebar;
 
     private string Time;
-    private static int Hour = 0; // ½Ã°£
-    private static int Minute = 0; // ºÐ
+    private static int Hour = 0; // ì‹œê°„
+    private static int Minute = 0; // ë¶„
 
     void Start()
     {
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(Effectcolor);
         if (DangerEffect == null)
         {
-            Debug.Log("³ÎÀÓ");
+            Debug.Log("ë„ìž„");
             
         }
     }
@@ -53,15 +53,15 @@ public class GameManager : MonoBehaviour
 
     public void TimeUpdater()
     {
-        // "00:00" Çü½ÄÀ¸·Î Ãâ·Â
-        Time = string.Format("{0:D2}:{1:D2}", Hour, Minute);  // µÎ ÀÚ¸® ¼ýÀÚ Çü½ÄÀ¸·Î Ãâ·Â
+        // "00:00" í˜•ì‹ìœ¼ë¡œ ì¶œë ¥
+        Time = string.Format("{0:D2}:{1:D2}", Hour, Minute);  // ë‘ ìžë¦¬ ìˆ«ìž í˜•ì‹ìœ¼ë¡œ ì¶œë ¥
         Timebar.text = Time;
     }
 
 
     public void InputObject()
     {
-        Minute += 10;  // ºÐÀ» 10ºÐ Áõ°¡½ÃÅ´
+        Minute += 10;  // ë¶„ì„ 10ë¶„ ì¦ê°€ì‹œí‚´
 
         if (Minute >= 60)
         {
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Debug.Log("½Ã°£: " + Hour + ", ºÐ: " + Minute);
+        Debug.Log("ì‹œê°„: " + Hour + ", ë¶„: " + Minute);
         
     }
 }
