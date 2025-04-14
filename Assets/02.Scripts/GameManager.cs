@@ -6,7 +6,11 @@ public class GameManager : MonoBehaviour
 {
 
     private GameObject DangerEffect;
-    private Color Effectcolor; // 색상 투명도
+    private GameObject Tomari;
+
+
+    private Color EffectColor; // 색상 투명도
+    private Color TomariColor;
 
     public Text Timebar;
 
@@ -17,7 +21,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         DangerEffect = GameObject.Find("DontDestroyObject/UI/DangerEffect");
-        Effectcolor = DangerEffect.GetComponent<Image>().color;
+        EffectColor = DangerEffect.GetComponent<Image>().color;
+
+        Tomari = GameObject.Find("DontDestroyObject/UI/Tomari");
+        TomariColor = Tomari.GetComponent<Image>().color;
+
     }
     //GameObject.FindWithTag("DangerEffect")
 
@@ -25,7 +33,7 @@ public class GameManager : MonoBehaviour
     {
         EffectTransparency();
         TimeUpdater();
-        Debug.Log(Effectcolor);
+        Debug.Log(EffectColor);
         if (DangerEffect == null)
         {
             Debug.Log("널임");
@@ -40,13 +48,19 @@ public class GameManager : MonoBehaviour
 
         if (Minute == 40)
         {
-            Effectcolor.a = 0.5f;
-            DangerEffect.GetComponent<Image>().color = Effectcolor;
+            EffectColor.a = 0.5f;
+            DangerEffect.GetComponent<Image>().color = EffectColor;
+
+            TomariColor.a = 0.5f;
+            Tomari.GetComponent<Image>().color = TomariColor;
         }
         else if(Minute == 50)
         {
-            Effectcolor.a = 0.7f;
-            DangerEffect.GetComponent<Image>().color = Effectcolor;
+            EffectColor.a = 0.7f;
+            DangerEffect.GetComponent<Image>().color = EffectColor;
+
+            TomariColor.a = 1f;
+            Tomari.GetComponent<Image>().color = TomariColor;
         }
     }
 
