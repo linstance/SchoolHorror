@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class TextManager : MonoBehaviour
 {
 
-    public Text NameBar;
-    public Text TextBar;
+    public TMP_Text NameBar;
+    public TMP_Text TextBar;
     public GameObject Bar;
 
     private int ClickCount = 0;
