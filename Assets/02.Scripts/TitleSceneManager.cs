@@ -7,7 +7,7 @@ public class TitleSceneManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Classroom");
+        SceneManager.LoadScene("교실 1-1");
     }
 
 

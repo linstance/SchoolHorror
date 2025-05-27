@@ -1,120 +1,233 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     [Header("UI")]
-    public TMP_Text Timebar;
-    public GameObject InventoryObj;             // 인벤토리 UI 오브젝트 (SetActive용)
-    public Inventory inventory;              // Inventory 스크립트 (에디터에서 직접 참조할 것)
+    public TMP_Text TimerText;
+    public GameObject InventoryObj;
+    public Inventory inventory;
 
     private GameObject DangerEffect;
-    private GameObject Tomari;
+    private GameObject Ghost;
+    public GameObject ghostImage;
 
     private Color EffectColor;
-    private Color TomariColor;
+    private Color GhostColor;
 
-    private string Time;
-    private static int Hour = 0;
-    private static int Minute = 0;
+    [Header("게임 시간/체력 설정")]
+    public float maxTime = 120f;
+    private float currentTime;
+    public bool isTimePaused = false;
+
+    public int maxHP = 6;
+    private int currentHP;
+
+    private bool damage60Given = false;
+    private bool damage40Given = false;
+    private bool damage20Given = false;
+    private bool ghostShown = false;
+
+    [Header("클리어 체크")]
+    public bool[] classroomClears = new bool[4]; // 1-1 ~ 1-4
+    public bool infirmaryClear = false;
 
     void Awake()
     {
-        // 싱글톤 설정
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            // 상위에서 DontDestroyOnLoad 처리됐으므로 생략
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // 중복 방지
             return;
         }
     }
 
     void Start()
     {
-        // UI 오브젝트 찾기 (씬 내에 반드시 있어야 함)
-        DangerEffect = GameObject.Find("DontDestroyObject/UI/DangerEffect");
-        if (DangerEffect != null)
-            EffectColor = DangerEffect.GetComponent<Image>().color;
-
-        Tomari = GameObject.Find("DontDestroyObject/UI/Tomari");
-        if (Tomari != null)
-            TomariColor = Tomari.GetComponent<Image>().color;
+        currentHP = maxHP;
+        isTimePaused = false;
+        InitSceneObjects();
+        ResetTimer();
     }
 
     void Update()
     {
-        EffectTransparency();
-        TimeUpdater();
+        if (isTimePaused) return;
+
+        currentTime -= Time.deltaTime;
+        UpdateTimerUI();
+
+        if (currentTime <= 60f && !damage60Given)
+            ApplyDangerEffect(0.3f, 0.2f, ref damage60Given);
+        if (currentTime <= 40f && !damage40Given)
+            ApplyDangerEffect(0.6f, 0.5f, ref damage40Given);
+        if (currentTime <= 20f && !damage20Given)
+            ApplyDangerEffect(0.9f, 0.9f, ref damage20Given);
+
+        if (currentTime <= 10f && !ghostShown)
+            ShowGhost();
+
+        if (currentTime <= 0 || currentHP <= 0)
+            GameOver("시간 초과 또는 체력 소진");
     }
 
-    private void EffectTransparency()
+    void OnEnable()
     {
-        if (Minute == 40)
-        {
-            SetEffectAlpha(0.5f);
-        }
-        else if (Minute == 50)
-        {
-            SetEffectAlpha(0.7f);
-            SetTomariAlpha(1.0f);
-        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void SetEffectAlpha(float alpha)
+    void OnDisable()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ResetTimer();
+        ResetDamageFlags();
+        InitSceneObjects();
+    }
+
+    void InitSceneObjects()
+    {
+        DangerEffect = GameObject.Find("DontDestroyObject/UI/DangerEffect");
+        if (DangerEffect != null)
+            EffectColor = DangerEffect.GetComponent<Image>().color;
+
+        Ghost = GameObject.Find("DontDestroyObject/UI/Ghost");
+        if (Ghost != null)
+        {
+            GhostColor = Ghost.GetComponent<Image>().color;
+            GhostColor.a = 0f;
+            Ghost.GetComponent<Image>().color = GhostColor;
+        }
+
+        GameObject ghostObj = GameObject.Find("GhostImage");
+        if (ghostObj != null)
+        {
+            ghostImage = ghostObj;
+            ghostImage.SetActive(false);
+        }
+
+        GameObject timerObj = GameObject.Find("TimerText");
+        if (timerObj != null)
+            TimerText = timerObj.GetComponent<TMP_Text>();
+    }
+
+    void ResetTimer()
+    {
+        currentTime = maxTime;
+    }
+
+    void ResetDamageFlags()
+    {
+        damage60Given = false;
+        damage40Given = false;
+        damage20Given = false;
+        ghostShown = false;
+    }
+
+    void ApplyDangerEffect(float dangerAlpha, float ghostAlpha, ref bool flag)
+    {
+        flag = true;
+        currentHP--;
+
         if (DangerEffect != null)
         {
-            EffectColor.a = alpha;
+            EffectColor.a = dangerAlpha;
             DangerEffect.GetComponent<Image>().color = EffectColor;
         }
+
+        if (Ghost != null)
+        {
+            GhostColor.a = ghostAlpha;
+            Ghost.GetComponent<Image>().color = GhostColor;
+        }
+
+        Debug.Log($"HP 감소: {currentHP}");
+
+        if (currentHP <= 0)
+            GameOver("체력 소진");
     }
 
-    private void SetTomariAlpha(float alpha)
+    void ShowGhost()
     {
-        if (Tomari != null)
+        ghostShown = true;
+
+        if (Ghost != null)
         {
-            TomariColor.a = alpha;
-            Tomari.GetComponent<Image>().color = TomariColor;
+            GhostColor.a = 1.0f;
+            Ghost.GetComponent<Image>().color = GhostColor;
+        }
+
+        if (ghostImage != null)
+            ghostImage.SetActive(true);
+    }
+
+    void UpdateTimerUI()
+    {
+        if (TimerText != null)
+            TimerText.text = Mathf.Ceil(currentTime).ToString("0") + "s";
+    }
+
+    public void AddBonusTime(float time)
+    {
+        currentTime += time;
+        if (currentTime > maxTime)
+            currentTime = maxTime;
+    }
+
+    public void PauseTimer(bool pause)
+    {
+        isTimePaused = pause;
+    }
+
+    void GameOver(string reason)
+    {
+        Debug.Log("Game Over: " + reason);
+        // TODO: 게임 오버 연출, 씬 전환, UI 표시 등
+    }
+
+    public void CheckEnding()
+    {
+        bool allCleared = classroomClears.All(c => c);
+
+        if (allCleared)
+        {
+            Debug.Log("해피엔딩!");
+            // TODO: 해피엔딩 처리
+        }
+        else if (infirmaryClear)
+        {
+            Debug.Log("보건실만 클리어 → 배드엔딩");
+            // TODO: 배드엔딩 처리
+        }
+        else
+        {
+            Debug.Log("엔딩 조건 미달 → 배드엔딩");
+            // TODO: 배드엔딩 처리
         }
     }
 
-    public void TimeUpdater()
-    {
-        Time = string.Format("{0:D2}:{1:D2}", Hour, Minute);
-        if (Timebar != null)
-            Timebar.text = Time;
-    }
-
-    public void InputObject()
-    {
-        Minute += 10;
-        if (Minute >= 60)
-        {
-            Minute = 0;
-            Hour += 1;
-            if (Hour >= 24)
-                Hour = 0;
-        }
-
-        Debug.Log("시간: " + Hour + ", 분: " + Minute);
-    }
+    // ===== 인벤토리 기능 =====
 
     public void InventoryOpen()
     {
-            InventoryObj.SetActive(true);
+        InventoryObj.SetActive(true);
 
-            // 인벤토리 UI 갱신
-            if (inventory != null)
-                inventory.FreshSlot();
-            else
-                Debug.LogError("Inventory 스크립트가 참조되지 않았습니다.");
+        if (inventory != null)
+            inventory.FreshSlot();
+        else
+            Debug.LogError("Inventory 스크립트가 참조되지 않았습니다.");
     }
 
     public void InventoryClose()
@@ -130,7 +243,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Inventory 또는 Item이 null입니다. 확인하세요.");
+            Debug.LogError("Inventory 또는 Item이 null입니다.");
         }
     }
 }

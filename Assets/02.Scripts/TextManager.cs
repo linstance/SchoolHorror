@@ -13,7 +13,7 @@ public class TextManager : MonoBehaviour
 
     private int ClickCount = 0;
     private List<Dictionary<string, object>> Main_Date;
-
+    private GameManager gm;
 
     private string currentText;
     private string currentName;
@@ -22,6 +22,7 @@ public class TextManager : MonoBehaviour
     private void Awake()
     {
         Main_Date = CSVReader.Read("Sheet/Main");
+        gm = GameManager.Instance;
     }
 
 
@@ -36,8 +37,6 @@ public class TextManager : MonoBehaviour
         NameBar.text = currentName;
         TextBar.text = currentText;
 
-        Debug.Log(currentActive);
-
         if (ClickCount < Main_Date.Count)
         {
             UpdateGameData(ClickCount);
@@ -49,6 +48,16 @@ public class TextManager : MonoBehaviour
         }
 
         ActiveUpdater();
+        TimeStoper();
+    }
+
+    private void TimeStoper()
+    {
+        if (currentActive == "TRUE")
+        {
+            gm.PauseTimer(true);
+        }
+           
     }
 
     private void ActiveUpdater()
@@ -56,7 +65,17 @@ public class TextManager : MonoBehaviour
         if(currentActive == "FALSE")
         {
             Bar.SetActive(false);
-            GameObject.Find("ClassroomObj").transform.GetChild(0).gameObject.SetActive(true);
+            gm.PauseTimer(false);
+
+            GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+            foreach (GameObject obj in allObjects)
+            {
+                if (obj.CompareTag("Object") && obj.scene.isLoaded)
+                {
+                    obj.SetActive(true);
+                }
+            }
         }
     }
 

@@ -9,8 +9,53 @@ EditorBuildSettings:
     path: Assets/01.Scenes/Title.unity
     guid: 8fefec7e201bb734fa78400d50163a8a
   - enabled: 1
-    path: Assets/01.Scenes/Classroom.unity
+    path: "Assets/01.Scenes/\uAD50\uC2E4 1-1.unity"
     guid: febbf4dabf6063d4a8c1b501f50b348c
+  - enabled: 1
+    path: "Assets/01.Scenes/\uAD50\uC2E4 1-2.unity"
+    guid: c1d9ba13bee162a469bf56202a390a0d
+  - enabled: 1
+    path: "Assets/01.Scenes/\uAD50\uC2E4 1-3.unity"
+    guid: 19c4eef6bc0bb654eaecc3f51213d36b
+  - enabled: 1
+    path: "Assets/01.Scenes/\uAD50\uC2E4 1-4.unity"
+    guid: 99abd4b35d0780740ba069148f516033
+  - enabled: 1
+    path: "Assets/01.Scenes/T\uC790\uD615 \uBCF5\uB3C41.unity"
+    guid: f76cb3d94e71087418f95f9ae7932cb9
+  - enabled: 1
+    path: "Assets/01.Scenes/T\uC790\uD615 \uBCF5\uB3C42.unity"
+    guid: 2e2f428a4120aa342bc9527cb507a71a
+  - enabled: 1
+    path: "Assets/01.Scenes/T\uC790\uD615 \uBCF5\uB3C43.unity"
+    guid: 9fe2937a436b4494f9fd68f806fade9a
+  - enabled: 1
+    path: "Assets/01.Scenes/\uC77C\uC790\uD615 \uBCF5\uB3C41.unity"
+    guid: d2da0ac9010a57c43b078660a5fea6a9
+  - enabled: 1
+    path: "Assets/01.Scenes/\uC77C\uC790\uD615 \uBCF5\uB3C42.unity"
+    guid: 14e75d46d95b2dd419c396b7c0064a24
+  - enabled: 1
+    path: "Assets/01.Scenes/\uC77C\uC790\uD615 \uBCF5\uB3C43.unity"
+    guid: 412903b720eba9a4ea561f25c0638b52
+  - enabled: 1
+    path: "Assets/01.Scenes/\uC77C\uC790\uD615 \uBCF5\uB3C44.unity"
+    guid: 10922fb0bb4fb524090aead031a298c2
+  - enabled: 1
+    path: "Assets/01.Scenes/\uC77C\uC790\uD615 \uBCF5\uB3C45.unity"
+    guid: 540b907029601ae4da24c037478d1bfe
+  - enabled: 1
+    path: "Assets/01.Scenes/\uC77C\uC790\uD615 \uBCF5\uB3C46.unity"
+    guid: 471f175029ee51c43a7378ebd5fe2ed2
+  - enabled: 1
+    path: "Assets/01.Scenes/\uC591\uD638\uC2E4.unity"
+    guid: 4675dce0cdb30664fbcee5634cdc1c49
+  - enabled: 1
+    path: "Assets/01.Scenes/\uD604\uAD00.unity"
+    guid: 309b95f6dd422094cb3dfd6313d3dfc3
+  - enabled: 1
+    path: "Assets/01.Scenes/\uD654\uC7A5\uC2E4.unity"
+    guid: e2d6e3d8b11e36a49a90f31682966f0c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
