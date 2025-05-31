@@ -1,15 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 
 public class TextManager : MonoBehaviour
 {
-
     public TMP_Text NameBar;
-    public TMP_Text TextBar;
-    public GameObject Bar;
+    public TMP_Text TextBar;          // 메시지 출력용 TMP_Text
+    public GameObject Bar;            // 텍스트 박스 전체 오브젝트 (활성/비활성 제어용)
 
     private int ClickCount = 0;
     private List<Dictionary<string, object>> Main_Date;
@@ -19,23 +17,27 @@ public class TextManager : MonoBehaviour
     private string currentName;
     private string currentActive;
 
+    private bool isShowingMessage = false; // 메시지 출력 중 상태 플래그
+
     private void Awake()
     {
         Main_Date = CSVReader.Read("Sheet/Main");
         gm = GameManager.Instance;
     }
 
-
     void Start()
     {
         UpdateGameData(0);
     }
 
-    // Update is called once per frame
     void Update()
     {
         NameBar.text = currentName;
-        TextBar.text = currentText;
+
+        if (!isShowingMessage)
+        {
+            TextBar.text = currentText;
+        }
 
         if (ClickCount < Main_Date.Count)
         {
@@ -57,18 +59,18 @@ public class TextManager : MonoBehaviour
         {
             gm.PauseTimer(true);
         }
-           
     }
 
     private void ActiveUpdater()
     {
-        if(currentActive == "FALSE")
+        if (isShowingMessage) return;  // 메시지 출력 중에는 무시
+
+        if (currentActive == "FALSE")
         {
             Bar.SetActive(false);
             gm.PauseTimer(false);
 
             GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-
             foreach (GameObject obj in allObjects)
             {
                 if (obj.CompareTag("Object") && obj.scene.isLoaded)
@@ -77,9 +79,11 @@ public class TextManager : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            Bar.SetActive(true);
+        }
     }
-
-
 
     private void UpdateGameData(int index)
     {
@@ -91,5 +95,26 @@ public class TextManager : MonoBehaviour
     public void next()
     {
         ClickCount += 1;
+    }
+
+    /// <summary>
+    /// 외부에서 메시지를 출력하고, 일정 시간 후 자동으로 TextBar를 비활성화합니다.
+    /// </summary>
+    public void ShowMessage(string message)
+    {
+        Debug.Log($"ShowMessage 호출됨, 메시지: [{message}], 인스턴스 이름: {gameObject.name}");
+
+        isShowingMessage = true; // 메시지 출력 중 상태 ON
+        Bar.SetActive(true);
+        TextBar.text = message;
+
+        StartCoroutine(HideBarAfterDelay(1.5f));
+    }
+
+    private IEnumerator HideBarAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Bar.SetActive(false);
+        isShowingMessage = false; // 메시지 출력 중 상태 OFF
     }
 }

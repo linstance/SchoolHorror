@@ -28,12 +28,10 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item newItem)
     {
-        // 아이템 리스트 내에서 비어있는 인덱스를 찾기
         for (int i = 0; i < slots.Length; i++)
         {
             if (i >= items.Count)
             {
-                // 리스트에 공간이 없는 경우 추가
                 items.Add(newItem);
                 FreshSlot();
                 return;
@@ -47,8 +45,39 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // 여기에 도달했다면 빈 슬롯이 없음
         Debug.Log("슬롯이 가득 차 있습니다.");
     }
+
+    /// <summary>
+    /// 지정된 이름의 아이템이 인벤토리에 있는지 확인합니다.
+    /// </summary>
+    public bool HasItem(string itemName)
+    {
+        foreach (Item item in items)
+        {
+            if (item != null && item.itemName == itemName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void RemoveItemByName(string itemName)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i] != null && items[i].itemName == itemName)
+            {
+                items[i] = null;
+                FreshSlot(); // UI 갱신
+                return;
+            }
+        }
+
+        Debug.Log("해당 이름의 아이템이 인벤토리에 없습니다.");
+    }
+
+
 
 }

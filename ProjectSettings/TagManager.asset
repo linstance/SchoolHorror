@@ -8,6 +8,7 @@ TagManager:
   - Object
   - Door
   - Canvas
+  - Obj
   layers:
   - Default
   - TransparentFX

@@ -24,7 +24,7 @@ public class UICameraAssigner : MonoBehaviour
         {
             uiCanvas.worldCamera = currentMainCamera;
             lastAssignedCamera = currentMainCamera;
-            Debug.Log("[UICameraAssigner] worldCamera 재할당: " + currentMainCamera.name);
+         
         }
         else if (currentMainCamera == null)
         {

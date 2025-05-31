@@ -86,8 +86,8 @@ Material:
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
-    - _TextureHeight: 1024
-    - _TextureWidth: 1024
+    - _TextureHeight: 4096
+    - _TextureWidth: 4096
     - _UnderlayDilate: 0
     - _UnderlayOffsetX: 0
     - _UnderlayOffsetY: 0
@@ -126,24 +126,24 @@ MonoBehaviour:
     m_FaceIndex: 0
     m_FamilyName: Ownglyph wiseelist
     m_StyleName: Regular
-    m_PointSize: 90
+    m_PointSize: 60
     m_Scale: 1
     m_UnitsPerEM: 1000
-    m_LineHeight: 98.100006
-    m_AscentLine: 72
-    m_CapLine: 59
-    m_MeanLine: 34
+    m_LineHeight: 65.4
+    m_AscentLine: 48
+    m_CapLine: 40
+    m_MeanLine: 23
     m_Baseline: 0
-    m_DescentLine: -18
-    m_SuperscriptOffset: 72
+    m_DescentLine: -12
+    m_SuperscriptOffset: 48
     m_SuperscriptSize: 0.5
-    m_SubscriptOffset: -18
+    m_SubscriptOffset: -12
     m_SubscriptSize: 0.5
-    m_UnderlineOffset: -11.25
-    m_UnderlineThickness: 4.5
-    m_StrikethroughOffset: 13.6
-    m_StrikethroughThickness: 4.5
-    m_TabWidth: 27
+    m_UnderlineOffset: -7.5000005
+    m_UnderlineThickness: 3
+    m_StrikethroughOffset: 9.2
+    m_StrikethroughThickness: 3
+    m_TabWidth: 18
   m_Material: {fileID: -7417343562715333384}
   m_SourceFontFileGUID: 3f0786c6108e05641969f7c591770364
   m_CreationSettings:
@@ -151,15 +151,15 @@ MonoBehaviour:
     sourceFontFileGUID: 3f0786c6108e05641969f7c591770364
     faceIndex: 0
     pointSizeSamplingMode: 0
-    pointSize: 90
+    pointSize: 60
     padding: 9
     paddingMode: 2
     packingMode: 0
-    atlasWidth: 1024
-    atlasHeight: 1024
+    atlasWidth: 4096
+    atlasHeight: 4096
     characterSetSelectionMode: 7
-    characterSequence: 
-    referencedFontAssetGUID: 
+    characterSequence: " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\_\u2026\u25A1"
+    referencedFontAssetGUID: 8b794e9491778eb41afbb726cb6bbe49
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
@@ -177,16 +177,16 @@ MonoBehaviour:
   m_IsMultiAtlasTexturesEnabled: 0
   m_GetFontFeatures: 1
   m_ClearDynamicDataOnBuild: 1
-  m_AtlasWidth: 1024
-  m_AtlasHeight: 1024
+  m_AtlasWidth: 4096
+  m_AtlasHeight: 4096
   m_AtlasPadding: 9
   m_AtlasRenderMode: 4165
   m_UsedGlyphRects: []
   m_FreeGlyphRects:
   - m_X: 0
     m_Y: 0
-    m_Width: 1023
-    m_Height: 1023
+    m_Width: 4095
+    m_Height: 4095
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords: []
@@ -256,7 +256,7 @@ Texture2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\uC628\uAE00\uC78E \uC704\uC528\uB9AC\uC2A4\uD2B8 Atlas"
+  m_Name: "\uC628\uAE00\uC78E \uC704\uC528\uB9AC\uC2A4\uD2B8 SDF Atlas"
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000

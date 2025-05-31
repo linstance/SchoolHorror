@@ -3,6 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
+    GameManager gm;
+
+
+    void Start()
+    {
+        gm = GameManager.Instance;
+    }
+
 
     public void Classroom1_1()
     {
@@ -71,9 +79,30 @@ public class GameSceneManager : MonoBehaviour
     }
 
 
+    public void Blackbord1()
+    {
+        SceneManager.LoadScene("칠판1");
+    }
+
+    public void Blackbord2()
+    {
+        SceneManager.LoadScene("칠판2");
+    }
+
+    public void Blackbord3()
+    {
+        SceneManager.LoadScene("칠판3");
+    }
+
+    public void Blackbord4()
+    {
+        SceneManager.LoadScene("칠판4");
+    }
+
+
     public void nursesOffice()
     {
-        SceneManager.LoadScene("양호실");
+        GameManager.Instance.TryLoadSceneWithItem("양호실", "보건실 열쇠");
     }
 
     public void Porch()
@@ -84,5 +113,18 @@ public class GameSceneManager : MonoBehaviour
     public void Restroom()
     {
         SceneManager.LoadScene("화장실");
+    }
+
+    public void Ending()
+    {
+        if (gm.isGoodClear == true)
+        {
+            GameManager.Instance.TryLoadSceneWithItem("해피엔딩", "현관 열쇠");
+        }
+
+        if(gm.isBadClear == true)
+        {
+            GameManager.Instance.TryLoadSceneWithItem("배드엔딩", "현관 열쇠");
+        }
     }
 }

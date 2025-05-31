@@ -19,7 +19,7 @@ public class UICursorTagChecker : MonoBehaviour
     {
         GameObject uiHit = GetUIObjectUnderCursor();
 
-        if (uiHit != null && uiHit.CompareTag("Object"))
+        if (uiHit != null && uiHit.CompareTag("Object") || uiHit != null && uiHit.CompareTag("Obj"))
         {
             if (!isCursorChanged)
             {
